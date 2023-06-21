@@ -19,6 +19,10 @@ public class ViTriCongViec {
                 '}';
     }
 
+    public ViTriCongViec(){
+
+    }
+
     public ViTriCongViec(int idNhanVien, int idViTri, String thoiDiemGan, String moTaCV) {
         this.idNhanVien = idNhanVien;
         this.idViTri = idViTri;

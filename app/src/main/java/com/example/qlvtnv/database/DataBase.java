@@ -1,12 +1,15 @@
 package com.example.qlvtnv.database;
 
-import static com.example.qlvtnv.database.NhanVienHelper.KEY_ID_NV;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_NAME_NV;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_NAM_SINH;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_QUE_QUAN;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_TRINH_DO;
 import static com.example.qlvtnv.database.NhanVienHelper.NAME_DATA_BASE_NV;
-import static com.example.qlvtnv.database.ViTriHelper.KEY_ID_VT;
+import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_ID_NV_VTCV;
+import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_ID_VT_VTCV;
+import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_MO_TA_VTCV;
+import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_THOI_DIEM_GAN;
+import static com.example.qlvtnv.database.ViTriCongViecHelper.NAME_DATA_BASE_VTCV;
 import static com.example.qlvtnv.database.ViTriHelper.KEY_MO_TA_VT;
 import static com.example.qlvtnv.database.ViTriHelper.KEY_NAME_VT;
 import static com.example.qlvtnv.database.ViTriHelper.NAME_DATA_BASE_VT;
@@ -16,17 +19,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.qlvtnv.activity.NhanVienActivity;
 import com.example.qlvtnv.model.NhanVien;
 import com.example.qlvtnv.model.ViTri;
+import com.example.qlvtnv.model.ViTriCongViec;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataBase {
     private NhanVienHelper nhanVienHelper;
 
     private ViTriHelper viTriHelper;
+
+    private ViTriCongViecHelper viTriCongViecHelper;
 
     private Context context;
 
@@ -37,6 +41,11 @@ public class DataBase {
 
     public DataBase(ViTriHelper viTriHelper, Context context) {
         this.viTriHelper = viTriHelper;
+        this.context = context;
+    }
+
+    public DataBase(ViTriCongViecHelper viTriCongViecHelper, Context context) {
+        this.viTriCongViecHelper = viTriCongViecHelper;
         this.context = context;
     }
 
@@ -115,7 +124,7 @@ public class DataBase {
 
         // Không có KEY_ID_VT vì đã xét nó AUTOINCREMENT
         contentValues.put(KEY_NAME_VT, viTri.getTenVT());
-        contentValues.put(KEY_MO_TA_VT, viTri.getMaVT());
+        contentValues.put(KEY_MO_TA_VT, viTri.getMoTa());
 
         db.insert(NAME_DATA_BASE_VT, null, contentValues);
     }
@@ -140,6 +149,44 @@ public class DataBase {
         }
         cursor.close();
         return viTriList;
+    }
+
+    /**
+     * @param viTriCongViec
+     */
+    public void themVTCV(ViTriCongViec viTriCongViec) {
+        SQLiteDatabase db = viTriCongViecHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(KEY_ID_NV_VTCV, viTriCongViec.getIdNhanVien());
+        contentValues.put(KEY_ID_VT_VTCV, viTriCongViec.getIdViTri());
+        contentValues.put(KEY_THOI_DIEM_GAN, viTriCongViec.getThoiDiemGan());
+        contentValues.put(KEY_MO_TA_VTCV, viTriCongViec.getMoTaCV());
+
+        db.insert(NAME_DATA_BASE_VTCV, null, contentValues);
+    }
+
+    public ArrayList<ViTriCongViec> getDSVTCV() {
+        SQLiteDatabase db = viTriCongViecHelper.getReadableDatabase();
+
+        ArrayList<ViTriCongViec> viTriCongViecList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("select * from " + NAME_DATA_BASE_VTCV, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ViTriCongViec viTriCongViec = new ViTriCongViec(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getString(3)
+            );
+
+            viTriCongViecList.add(viTriCongViec);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return viTriCongViecList;
     }
 
 }

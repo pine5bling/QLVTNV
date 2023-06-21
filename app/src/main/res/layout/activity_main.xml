@@ -54,4 +54,13 @@
         android:text="@string/lietke"
         android:textSize="18sp" />
 
+    <Button
+        android:id="@+id/btnMain5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="16dp"
+        android:text="@string/statistic"
+        android:textSize="18sp" />
+
 </LinearLayout>

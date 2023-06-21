@@ -13,6 +13,12 @@
         android:theme="@style/Theme.QLVTNV"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ThongKeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ViTriCongViecActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LietKeActivity"
             android:exported="false" />
         <activity

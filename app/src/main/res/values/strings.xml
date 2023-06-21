@@ -4,4 +4,6 @@
     <string name="dsvt">Danh sách Vị trí</string>
     <string name="dsnvtvt">Danh sách Nhân viên theo Vị trí</string>
     <string name="lietke">Liệt kê Nhân viên có tên là Nam sinh năm 1995</string>
+    <string name="statistic">Thống kê nhân viên theo vị trí công việc </string>
+    <string name="thong_ke">Thống kê nhân viên theo vị trí công việc, sắp xếp vị trí theo số nhân viên giảm dần</string>
 </resources>

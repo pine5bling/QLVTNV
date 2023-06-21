@@ -5,53 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.NhanVienActivity">
+    tools:context=".activity.ViTriCongViecActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Danh sách nhân viên"
+        android:text="Danh sách nhân viên theo vị trí"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtNV2"
+        android:id="@+id/edt1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Nhập tên nhân viên" />
+        android:layout_marginTop="16dp"
+        android:hint="Nhập mã nhân viên" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtNV3"
+        android:id="@+id/edt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Nhập năm sinh" />
+        android:hint="Nhập mã vị trí" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtNV4"
+        android:id="@+id/edt3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Nhập quê quán" />
+        android:hint="Nhập thời điểm gán" />
 
-    <Spinner
-        android:id="@+id/spNV5"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingVertical="10dp" />
+        android:hint="Nhập mô tả" />
 
     <Button
-        android:id="@+id/btnNV"
+        android:id="@+id/btnVTCV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="20dp"
-        android:text="Thêm Nhân viên "
+        android:text="Thêm nhân viên vào vị trí"
         android:textSize="18dp" />
 
     <View
@@ -61,7 +61,7 @@
         android:background="@color/green" />
 
     <ListView
-        android:id="@+id/lvNV"
+        android:id="@+id/lvVTCV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

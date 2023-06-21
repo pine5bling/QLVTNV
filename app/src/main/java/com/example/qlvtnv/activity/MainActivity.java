@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnVT = findViewById(R.id.btnMain2);
         Button btnVTNV = findViewById(R.id.btnMain3);
         Button btnLietKe = findViewById(R.id.btnMain4);
+        Button btnThongKe = findViewById(R.id.btnMain5);
 
         btnNV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         btnVTNV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, NhanVienActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, ViTriCongViecActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LietKeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnThongKe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ThongKeActivity.class);
                 startActivity(intent);
             }
         });
