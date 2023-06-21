@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Ngô Thị Thơm (B19DCAT194)"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnMain1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="16dp"
+        android:text="@string/dsnv"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnMain2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="16dp"
+        android:text="@string/dsvt"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnMain3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="16dp"
+        android:text="@string/dsnvtvt"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnMain4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:paddingVertical="16dp"
+        android:text="@string/lietke"
+        android:textSize="18sp" />
+
+</LinearLayout>

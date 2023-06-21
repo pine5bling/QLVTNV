@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">QLVTNV</string>
+    <string name="dsnv">Danh sách Nhân viên</string>
+    <string name="dsvt">Danh sách Vị trí</string>
+    <string name="dsnvtvt">Danh sách Nhân viên theo Vị trí</string>
+    <string name="lietke">Liệt kê Nhân viên có tên là Nam sinh năm 1995</string>
+</resources>
