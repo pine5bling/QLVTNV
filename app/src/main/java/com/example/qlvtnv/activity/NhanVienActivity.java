@@ -12,30 +12,27 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.qlvtnv.R;
-import com.example.qlvtnv.database.DataBase;
-import com.example.qlvtnv.database.NhanVienHelper;
+import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.NhanVien;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NhanVienActivity extends AppCompatActivity {
-
-    private NhanVienHelper nhanVienHelper;
-
-    private DataBase dataBase;
-
+    DatabaseHelper databaseHelper;
     Button btnNV;
     EditText edtNV2, edtNV3, edtNV4;
-
     Spinner spNV5;
     ListView lv;
-    ArrayList<NhanVien> nhanViens;
+    List<NhanVien> nhanViens;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nhan_vien_activity);
+
+        databaseHelper = new DatabaseHelper(getBaseContext());
 
         edtNV2 = findViewById(R.id.edtNV2);
         edtNV3 = findViewById(R.id.edtNV3);
@@ -44,11 +41,8 @@ public class NhanVienActivity extends AppCompatActivity {
         btnNV = findViewById(R.id.btnNV);
         lv = findViewById(R.id.lvNV);
 
-        nhanVienHelper = new NhanVienHelper(this.getApplicationContext());
-        dataBase = new DataBase(nhanVienHelper, this);
-
         setupSpinner();
-        getNV();
+        getNVList();
 
         btnNV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +62,8 @@ public class NhanVienActivity extends AppCompatActivity {
         });
     }
 
-    private void getNV() {
-        nhanViens = dataBase.getDSNV();
+    private void getNVList() {
+        nhanViens = databaseHelper.layDanhSachNhanVien();
         ArrayAdapter<NhanVien> nhanVienArrayAdapterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nhanViens);
         lv.setAdapter(nhanVienArrayAdapterAdapter);
     }
@@ -85,7 +79,7 @@ public class NhanVienActivity extends AppCompatActivity {
     }
 
     private void themNhanVien(NhanVien nhanVien) {
-        dataBase.themNV(nhanVien);
-        getNV();
+        databaseHelper.themNhanVien(nhanVien);
+        getNVList();
     }
 }

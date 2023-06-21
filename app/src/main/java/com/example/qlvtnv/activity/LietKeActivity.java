@@ -4,43 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.example.qlvtnv.R;
-import com.example.qlvtnv.database.DataBase;
-import com.example.qlvtnv.database.NhanVienHelper;
+import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.NhanVien;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LietKeActivity extends AppCompatActivity {
-
-    private NhanVienHelper nhanVienHelper;
-
-    private DataBase dataBase;
-
+    DatabaseHelper databaseHelper;
     ListView lv;
-
-    ArrayList<NhanVien> nhanViens;
+    List<NhanVien> nhanViens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liet_ke_activity);
 
-        lv = findViewById(R.id.lvLietKe);
+        databaseHelper = new DatabaseHelper(getBaseContext());
 
-        nhanVienHelper = new NhanVienHelper(this.getApplicationContext());
-        dataBase = new DataBase(nhanVienHelper, this);
+        lv = findViewById(R.id.lvLietKe);
 
         getLietKeNV();
     }
 
     private void getLietKeNV() {
-        nhanViens = dataBase.getLietKe();
+        nhanViens = databaseHelper.danhSachTimKiem();
         ArrayAdapter<NhanVien> nhanVienArrayAdapterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nhanViens);
         lv.setAdapter(nhanVienArrayAdapterAdapter);
     }

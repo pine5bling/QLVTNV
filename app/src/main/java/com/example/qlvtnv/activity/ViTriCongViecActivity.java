@@ -10,31 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-
 import com.example.qlvtnv.R;
-import com.example.qlvtnv.database.DataBase;
-import com.example.qlvtnv.database.NhanVienHelper;
-import com.example.qlvtnv.database.ViTriCongViecHelper;
-import com.example.qlvtnv.database.ViTriHelper;
+import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.ViTriCongViec;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViTriCongViecActivity extends AppCompatActivity {
-
-    private ViTriCongViecHelper viTriCongViecHelper;
-    private NhanVienHelper nhanVienHelper;
-    private ViTriHelper viTriHelper;
-
-    private DataBase dataBase;
-
+    DatabaseHelper databaseHelper;
     private EditText edt3, edt4;
-
     Spinner sp1, sp2;
-
     private ListView lv;
-
-    ArrayList<ViTriCongViec> viTriCongViecs;
+    List<ViTriCongViec> viTriCongViecs;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,18 +30,14 @@ public class ViTriCongViecActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vi_tri_cong_viec_activity);
 
+        databaseHelper = new DatabaseHelper(getBaseContext());
+
         sp1 = findViewById(R.id.sp1);
         sp2 = findViewById(R.id.sp2);
         edt3 = findViewById(R.id.edt3);
         edt4 = findViewById(R.id.edt4);
         Button btnVTCV = findViewById(R.id.btnVTCV);
         lv = findViewById(R.id.lvVTCV);
-
-        viTriCongViecHelper = new ViTriCongViecHelper(this.getApplicationContext());
-        viTriHelper = new ViTriHelper(this.getApplicationContext());
-        nhanVienHelper = new NhanVienHelper(this.getApplicationContext());
-
-        dataBase = new DataBase(viTriCongViecHelper, nhanVienHelper, viTriHelper, this);
 
         setupSpinnerNV();
         setupSpinnerVT();
@@ -76,27 +60,27 @@ public class ViTriCongViecActivity extends AppCompatActivity {
     }
 
     private void setupSpinnerNV() {
-        ArrayList<Integer> idNVList;
-        idNVList = dataBase.getDSIdNV();
+        List<Integer> idNVList;
+        idNVList = databaseHelper.getDSIdNV();
         ArrayAdapter<Integer> spinNV = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, idNVList);
         sp1.setAdapter(spinNV);
     }
 
     private void setupSpinnerVT() {
-        ArrayList<Integer> idVTList;
-        idVTList = dataBase.getDSIdVT();
+        List<Integer> idVTList;
+        idVTList = databaseHelper.getDSIdVT();
         ArrayAdapter<Integer> spinVT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, idVTList);
         sp2.setAdapter(spinVT);
     }
 
-    private void getVTCV() {
-        viTriCongViecs = dataBase.getDSVTCV();
+    private void getVTCVList() {
+        viTriCongViecs = databaseHelper.layDanhSachViTriCV();
         ArrayAdapter<ViTriCongViec> viTriCongViecArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, viTriCongViecs);
         lv.setAdapter(viTriCongViecArrayAdapter);
     }
 
     private void themVTCV(ViTriCongViec viTriCongViec) {
-        dataBase.themVTCV(viTriCongViec);
-        getVTCV();
+        databaseHelper.themViTriCongViec(viTriCongViec);
+        getVTCVList();
     }
 }

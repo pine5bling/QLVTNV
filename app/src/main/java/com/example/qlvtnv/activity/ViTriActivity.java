@@ -9,28 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.example.qlvtnv.R;
-import com.example.qlvtnv.database.DataBase;
-import com.example.qlvtnv.database.NhanVienHelper;
-import com.example.qlvtnv.database.ViTriHelper;
-import com.example.qlvtnv.model.NhanVien;
+import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.ViTri;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ViTriActivity extends AppCompatActivity {
-
-    private ViTriHelper viTriHelper;
-
-    private DataBase dataBase;
-
+    DatabaseHelper databaseHelper;
     Button btnVT;
     EditText edtNameVT, edtMoTaVT;
-
     ListView lv;
-    ArrayList<ViTri> viTris;
+    List<ViTri> viTris;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,8 +34,7 @@ public class ViTriActivity extends AppCompatActivity {
         btnVT = findViewById(R.id.btnVT);
         lv = findViewById(R.id.lvVT);
 
-        viTriHelper = new ViTriHelper(this.getApplicationContext());
-        dataBase = new DataBase(viTriHelper, this);
+        databaseHelper = new DatabaseHelper(getBaseContext());
 
         btnVT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,15 +48,15 @@ public class ViTriActivity extends AppCompatActivity {
             }
         });
     }
-    private void getVT() {
-        viTris = dataBase.getDSVT();
+    private void getVTList() {
+        viTris = databaseHelper.layDanhSachViTri();
         ArrayAdapter<ViTri> viTriArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, viTris);
         lv.setAdapter(viTriArrayAdapter);
     }
 
     private void themViTri(ViTri viTri) {
-        dataBase.themVT(viTri);
-        getVT();
+        databaseHelper.themViTri(viTri);
+        getVTList();
     }
 }
 
