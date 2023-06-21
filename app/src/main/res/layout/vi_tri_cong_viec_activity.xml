@@ -17,19 +17,19 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt1"
+    <Spinner
+        android:id="@+id/sp1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Nhập mã nhân viên" />
+        android:paddingVertical="12dp" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edt2"
+    <Spinner
+        android:id="@+id/sp2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Nhập mã vị trí" />
+        android:paddingVertical="12dp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt3"

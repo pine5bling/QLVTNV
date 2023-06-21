@@ -1,5 +1,6 @@
 package com.example.qlvtnv.database;
 
+import static com.example.qlvtnv.database.NhanVienHelper.KEY_ID_NV;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_NAME_NV;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_NAM_SINH;
 import static com.example.qlvtnv.database.NhanVienHelper.KEY_QUE_QUAN;
@@ -10,10 +11,12 @@ import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_ID_VT_VTCV;
 import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_MO_TA_VTCV;
 import static com.example.qlvtnv.database.ViTriCongViecHelper.KEY_THOI_DIEM_GAN;
 import static com.example.qlvtnv.database.ViTriCongViecHelper.NAME_DATA_BASE_VTCV;
+import static com.example.qlvtnv.database.ViTriHelper.KEY_ID_VT;
 import static com.example.qlvtnv.database.ViTriHelper.KEY_MO_TA_VT;
 import static com.example.qlvtnv.database.ViTriHelper.KEY_NAME_VT;
 import static com.example.qlvtnv.database.ViTriHelper.NAME_DATA_BASE_VT;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -44,8 +47,10 @@ public class DataBase {
         this.context = context;
     }
 
-    public DataBase(ViTriCongViecHelper viTriCongViecHelper, Context context) {
+    public DataBase(ViTriCongViecHelper viTriCongViecHelper,NhanVienHelper nhanVienHelper,ViTriHelper viTriHelper, Context context) {
+        this.nhanVienHelper = nhanVienHelper;
         this.viTriCongViecHelper = viTriCongViecHelper;
+        this.viTriHelper = viTriHelper;
         this.context = context;
     }
 
@@ -89,6 +94,31 @@ public class DataBase {
         cursor.close();
         return nhanVienList;
     }
+
+    public ArrayList<Integer> getDSIdNV() {
+        SQLiteDatabase db = nhanVienHelper.getReadableDatabase();
+
+        ArrayList<Integer> idNVList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + KEY_ID_NV + " FROM " + NAME_DATA_BASE_NV, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            @SuppressLint("Range") int idNV = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID_NV)));
+            idNVList.add(idNV);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return idNVList;
+    }
+
+    //        if (cursor.moveToFirst()) {
+//            do {
+//                @SuppressLint("Range") int columnIdNV = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID_NV)));
+//                idNVList.add(columnIdNV);
+//            } while (cursor.moveToNext());
+//        }
 
     public ArrayList<NhanVien> getLietKe() {
         SQLiteDatabase db = nhanVienHelper.getReadableDatabase();
@@ -149,6 +179,25 @@ public class DataBase {
         }
         cursor.close();
         return viTriList;
+    }
+
+    public ArrayList<Integer> getDSIdVT() {
+        SQLiteDatabase db = viTriHelper.getReadableDatabase();
+
+        ArrayList<Integer> idVTList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT " + KEY_ID_VT + " FROM " + NAME_DATA_BASE_VT, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            @SuppressLint("Range") int idVT = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID_VT)));
+            idVTList.add(idVT);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return idVTList;
     }
 
     /**
