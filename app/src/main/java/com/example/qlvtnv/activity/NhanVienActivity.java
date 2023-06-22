@@ -62,12 +62,6 @@ public class NhanVienActivity extends AppCompatActivity {
         });
     }
 
-    private void getNVList() {
-        nhanViens = databaseHelper.layDanhSachNhanVien();
-        ArrayAdapter<NhanVien> nhanVienArrayAdapterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nhanViens);
-        lv.setAdapter(nhanVienArrayAdapterAdapter);
-    }
-
     private void setupSpinner() {
         ArrayList<String> trinhDoType = new ArrayList<>();
         trinhDoType.add("Cao đẳng");
@@ -76,6 +70,12 @@ public class NhanVienActivity extends AppCompatActivity {
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, trinhDoType);
         spNV5.setAdapter(stringArrayAdapter);
+    }
+
+    private void getNVList() {
+        nhanViens = databaseHelper.layDanhSachNhanVien();
+        ArrayAdapter<NhanVien> nhanVienArrayAdapterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nhanViens);
+        lv.setAdapter(nhanVienArrayAdapterAdapter);
     }
 
     private void themNhanVien(NhanVien nhanVien) {

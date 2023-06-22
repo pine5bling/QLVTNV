@@ -63,48 +63,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * nhanVien
      */
 
-    public void themNhanVien(NhanVien nhanVien) {
+    public void them(String tenBang, ContentValues values) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put("tenNV", nhanVien.getTenNV());
-        values.put("namSinh", nhanVien.getNamSinh());
-        values.put("queQuan", nhanVien.getQueQuan());
-        values.put("trinhDo", nhanVien.getTrinhDo());
-
-        db.insert(NAME_TABLE_NV, null, values);
+        db.insert(tenBang, null, values);
         db.close();
     }
 
-    public List<NhanVien> layDanhSachNhanVien() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        List<NhanVien> nhanVienList = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery("Select * from NAME_TABLE_NV", null);
-        if (cursor.moveToFirst()) {
-            do {
-                NhanVien nhanVien = new NhanVien();
-                nhanVien.setMaNV(cursor.getInt(0));
-                nhanVien.setTenNV(cursor.getString(1));
-                nhanVien.setNamSinh(cursor.getInt(2));
-                nhanVien.setQueQuan(cursor.getString(3));
-                nhanVien.setTrinhDo(cursor.getString(4));
-                nhanVienList.add(nhanVien);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return nhanVienList;
-    }
-
-    public List<NhanVien> danhSachTimKiem() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
+    public List<NhanVien> getCursorNV(Cursor cursor, SQLiteDatabase db) {
         List<NhanVien> nvList = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery("Select * from NAME_TABLE_NV where tenNV like '%nam%' and namSinh like '%1995%'", null);
         if (cursor.moveToFirst()) {
             do {
                 NhanVien nhanVien = new NhanVien();
@@ -121,20 +87,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return nvList;
     }
 
-    public List<Integer> getDSIdNV() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        List<Integer> idNVList = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery("SELECT maNV FROM NAME_TABLE_NV ", null);
+    public List<Integer> layIdList(Cursor cursor, String tenCotId) {
+        List<Integer> idList = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            @SuppressLint("Range") int idNV = Integer.parseInt(cursor.getString(cursor.getColumnIndex("maNV")));
-            idNVList.add(idNV);
+            @SuppressLint("Range") int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(tenCotId)));
+            idList.add(id);
             cursor.moveToNext();
         }
         cursor.close();
-        return idNVList;
+        return idList;
+    }
+
+    public void themNhanVien(NhanVien nhanVien) {
+        ContentValues values = new ContentValues();
+        values.put("tenNV", nhanVien.getTenNV());
+        values.put("namSinh", nhanVien.getNamSinh());
+        values.put("queQuan", nhanVien.getQueQuan());
+        values.put("trinhDo", nhanVien.getTrinhDo());
+        them(NAME_TABLE_NV, values);
+    }
+
+    public List<NhanVien> layDanhSachNhanVien() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from NAME_TABLE_NV", null);
+        return getCursorNV(cursor, db);
+    }
+
+    public List<NhanVien> layDSLietKe() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from NAME_TABLE_NV where tenNV like '%nam%' and namSinh like '%1995%'", null);
+        return getCursorNV(cursor, this.getReadableDatabase());
+    }
+
+    public List<Integer> layDSIdNV() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT maNV FROM NAME_TABLE_NV", null);
+        return layIdList(cursor, "maNV");
     }
 
     /**
@@ -142,22 +131,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
 
     public void themViTri(ViTri viTri) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-
         values.put("tenVT", viTri.getTenVT());
         values.put("moTa", viTri.getMoTa());
 
-        db.insert(NAME_TABLE_VT, null, values);
-        db.close();
+        them(NAME_TABLE_VT, values);
     }
 
     public List<ViTri> layDanhSachViTri() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
         List<ViTri> viTriList = new ArrayList<>();
-
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from NAME_TABLE_VT", null);
         if (cursor.moveToFirst()) {
             do {
@@ -173,21 +156,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return viTriList;
     }
 
-    public List<Integer> getDSIdVT() {
+    public List<Integer> layDSIdVT() {
         SQLiteDatabase db = this.getReadableDatabase();
-
-        List<Integer> idVTList = new ArrayList<>();
-
         Cursor cursor = db.rawQuery("SELECT maVT FROM NAME_TABLE_VT", null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            @SuppressLint("Range") int idVT = Integer.parseInt(cursor.getString(cursor.getColumnIndex("maVT")));
-            idVTList.add(idVT);
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return idVTList;
+        return layIdList(cursor, "maVT");
     }
 
     /**
@@ -195,24 +167,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
 
     public void themViTriCongViec(ViTriCongViec viTriCongViec) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-
         values.put("idNhanVien", viTriCongViec.getIdNhanVien());
         values.put("idViTri", viTriCongViec.getIdViTri());
         values.put("thoiDiemGan", viTriCongViec.getThoiDiemGan());
         values.put("moTaCV", viTriCongViec.getMoTaCV());
 
-        db.insert(NAME_TABLE_VTCV, null, values);
-        db.close();
+        them(NAME_TABLE_VTCV, values);
     }
 
     public List<ViTriCongViec> layDanhSachViTriCV() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
         List<ViTriCongViec> listDangKy = new ArrayList<>();
-
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from NAME_TABLE_VTCV", null);
         if (cursor.moveToFirst()) {
             do {
@@ -232,24 +198,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<ThongKe> layDanhSachThongKe() {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        List<ThongKe> listThongKe = new ArrayList<>();
+        List<ThongKe> thongKeList = new ArrayList<>();
 
-        String sqlQuery = "Select NAME_TABLE_VT.maVT, NAME_TABLE_VT.tenVT, count(*) as soNhanVien from NAME_TABLE_VTCV " +
+        String query = "Select NAME_TABLE_VT.maVT, NAME_TABLE_VT.tenVT, count(*) as soNhanVien from NAME_TABLE_VTCV " +
                 "inner join NAME_TABLE_VT on NAME_TABLE_VTCV.idViTri = NAME_TABLE_VT.maVT " +
                 "group by idViTri order by soNhanVien desc";
 
-        Cursor cursor = db.rawQuery(sqlQuery, null);
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
                 ThongKe thongKe = new ThongKe();
                 thongKe.setIdVT(cursor.getInt(0));
                 thongKe.setTenVT(cursor.getString(1));
                 thongKe.setSoNhanVien(cursor.getInt(2));
-                listThongKe.add(thongKe);
+                thongKeList.add(thongKe);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return listThongKe;
+        return thongKeList;
     }
 }

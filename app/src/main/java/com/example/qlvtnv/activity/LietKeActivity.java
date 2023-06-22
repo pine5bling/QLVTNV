@@ -10,7 +10,6 @@ import com.example.qlvtnv.R;
 import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.NhanVien;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LietKeActivity extends AppCompatActivity {
@@ -31,7 +30,7 @@ public class LietKeActivity extends AppCompatActivity {
     }
 
     private void getLietKeNV() {
-        nhanViens = databaseHelper.danhSachTimKiem();
+        nhanViens = databaseHelper.layDSLietKe();
         ArrayAdapter<NhanVien> nhanVienArrayAdapterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nhanViens);
         lv.setAdapter(nhanVienArrayAdapterAdapter);
     }

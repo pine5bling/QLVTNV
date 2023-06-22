@@ -11,7 +11,6 @@ import android.widget.Button;
 import com.example.qlvtnv.R;
 
 public class MainActivity extends AppCompatActivity {
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

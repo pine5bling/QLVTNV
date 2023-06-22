@@ -14,7 +14,6 @@ import com.example.qlvtnv.R;
 import com.example.qlvtnv.database.DatabaseHelper;
 import com.example.qlvtnv.model.ViTriCongViec;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViTriCongViecActivity extends AppCompatActivity {
@@ -61,14 +60,14 @@ public class ViTriCongViecActivity extends AppCompatActivity {
 
     private void setupSpinnerNV() {
         List<Integer> idNVList;
-        idNVList = databaseHelper.getDSIdNV();
+        idNVList = databaseHelper.layDSIdNV();
         ArrayAdapter<Integer> spinNV = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, idNVList);
         sp1.setAdapter(spinNV);
     }
 
     private void setupSpinnerVT() {
         List<Integer> idVTList;
-        idVTList = databaseHelper.getDSIdVT();
+        idVTList = databaseHelper.layDSIdVT();
         ArrayAdapter<Integer> spinVT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, idVTList);
         sp2.setAdapter(spinVT);
     }
